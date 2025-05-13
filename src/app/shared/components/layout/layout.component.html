@@ -1,0 +1,22 @@
+<aside class="sidebar">
+  <button
+    class="sidebar-toggle min-w-max flex align-content-center align-items-center justify-content-center"
+    (click)="toggleSidebar()">
+    <span class="material-symbols-rounded menu-logo" [title]="getTooltipText()" >
+      {{ sidebarCollapsed ? 'menu' : 'format_align_right' }}
+    </span>
+      </button>
+  <app-navigation
+    class="test"
+    [sidebarCollapsed]="sidebarCollapsed"
+  ></app-navigation>
+</aside>
+
+<main class="main-content">
+  <div class="head">
+    <app-header [title]="title"></app-header>
+  </div>
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+</main>

@@ -1,0 +1,69 @@
+.resume-container {
+  margin: 3rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafe;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #2c3e50;
+}
+
+p {
+  text-align: center;
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.filter-input {
+  display: flex;
+justify-content: space-between;
+align-items: right;
+gap: 1rem;
+flex-wrap: wrap;
+margin-bottom: 1rem;
+margin-bottom: 25px;
+margin-top: 18px;
+}
+
+.p-inputtext {
+  margin-left: auto;
+  max-width: 300px;
+}
+
+
+.p-button {
+  white-space: nowrap;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #888;
+}
+::ng-deep .p-datatable-sm .p-datatable-wrapper {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.page-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 0 1rem;
+  flex-shrink: 0;
+  margin-top: 10px;
+
+} 
+  
+  
+  
+  

@@ -1,0 +1,97 @@
+.resume-upload-container {
+  // margin: 2rem auto;
+  // padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 100px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.upload-heading {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  color: #34495e;
+}
+
+.search-box {
+  width: 250px;
+  margin-left: 50rem;
+}
+
+
+.upload-box {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  text-align: right;
+}
+
+.rounded-table ::ng-deep .p-datatable-wrapper {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.p-button-rounded {
+  border-radius: 2rem;
+}
+
+.p-shadow-2 {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  // margin-bottom: 0.25rem;
+  color: #2c3e50;
+}
+
+p {
+  text-align: center;
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 2rem;  
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.table-header .p-input-icon-right {
+  margin-left: auto;  /* Push search input and file upload to the right */
+  margin-right: 2rem;
+}
+
+.jd-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  gap: 0.5rem;
+}
+
+.p-input-icon-left {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.p-input-icon-left > i {
+  position: absolute;
+  left: 0.75rem;
+  color: #6b7280;
+  pointer-events: none;
+}
+
+/* Optionally, adjust padding for paginator button */
+.paginator-btn {
+  padding: 14px 14px;
+}

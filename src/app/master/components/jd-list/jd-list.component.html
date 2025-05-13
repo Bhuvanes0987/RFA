@@ -1,0 +1,64 @@
+
+<div class="filter-input">
+    <h2 class="page-heading">
+        JD List
+    </h2>
+  <input type="text" [(ngModel)]="filterKeyword" placeholder="E.g., Angular, Node.js..." class="p-inputtext p-component" />
+  <button pButton type="button" label="Filter JD" icon="pi pi-filter" (click)="onFilter()"></button>
+</div>
+
+<p-table 
+  #dt
+  [value]="filteredJdList" 
+  class="p-datatable-sm" 
+  [paginator]="true" 
+  [rows]="10"
+  [rowsPerPageOptions]="[10, 20, 50, 100]"
+  [sortField]="'Description'"
+  [sortOrder]="1"
+  >
+  <ng-template pTemplate="header">
+    <tr>
+      <th> S.No </th>
+      <th pSortableColumn="Description">Description <p-sortIcon field="Description"></p-sortIcon></th>
+      <th>Actions </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-jd  let-i="rowIndex">
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ jd.Description }}</td>
+      <td>
+        <i 
+          class="pi pi-copy" 
+          pTooltip="Copy" 
+          tooltipPosition="top"
+          style="cursor: pointer; font-size: 1.2rem;"
+          (click)="copyJD(jd.Description)"
+        ></i>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+  </ng-template>
+  <ng-template pTemplate="paginatorright">
+      <!-- To keep the paginator centered, make sure to not add anything here. -->
+    <span class="record-count">
+      Showing {{ (dt?.totalRecords ?? 0)>0 ? ((dt?.first ?? 0) + 1) : 0 }} to 
+      {{
+        (dt?.first ?? 0) + (dt?.rows ?? 0) > (dt?.totalRecords ?? 0)
+          ? (dt?.totalRecords ?? 0)
+          : (dt?.first ?? 0) + (dt?.rows ?? 0)
+      }} 
+      of {{ dt?.totalRecords ?? 0 }} records
+    </span>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="12" class="text-center text-muted">No JDs available to display</td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-toast></p-toast>
+<!-- </div> -->
+  

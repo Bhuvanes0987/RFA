@@ -1,0 +1,68 @@
+<div class="account-info flex justify-content-start align-content-center">
+
+  <div class="flex align-items-center justify-content-center">
+    <button class="notification-btn" (click)="toggleSidebar()">
+      <div class="card flex justify-content-center">
+        <i class="pi pi-bell text-2xl mr-1" style="  cursor: pointer;"   pBadge value="{{badgeValue}}"></i>
+    </div>
+  </button>
+  </div>
+  <div class="flex align-items-center justify-content-center" >
+    <button
+     style="background-color: #ededef;border: none;"
+     (click)="accountMenu.toggle($event)"
+    >
+
+    <!-- <div class="nav-icon">{{ getFirstLetters() }}</div>     -->
+    <div class="nav-icon">AA</div>    
+    
+  </button>
+  </div>
+</div>
+
+
+<p-sidebar [(visible)]="sidebarVisible" [position]="'right'" [showCloseIcon]="true">
+  <ng-template pTemplate="header"><b>Notifications</b></ng-template>
+  <br>
+  <p>1. New Resume Added. </p>
+  <br>
+  <p>2. 3 Resumes have been Shortlisted.</p>
+  <br>
+  <p>3. 1 Java Candidate Selected!!!</p>
+</p-sidebar>
+
+
+<p-overlayPanel class="overflow-scroll" #accountMenu (onHide)="onHideOverlay()">
+  <ng-template pTemplate="content">
+    <div class="py-1 flex flex-row flex-nowrap gap-2">
+      <div>
+        <h4
+          class="profileName my-0 pb-1 white-space-nowrap overflow-hidden text-overflow-ellipsis"
+        >
+          {{ name }}
+        </h4>
+      </div>
+      <div>-</div>
+      <div class="profileId pb-1">{{ role }}</div>
+    </div>
+    <div
+      class="py-1 text-sm white-space-nowrap overflow-hidden text-overflow-ellipsis"
+    >
+      {{ email }}
+    </div>
+
+    <div>
+      <button
+        class="btn-logout flex flex-row flex-nowrap justify-content-start align-items-center gap-1"
+        (click)="logout()"
+      >
+        <div>Logout</div>
+        <div>
+          <span class="material-symbols-rounded" style="font-size: 1.5rem;">
+            logout
+          </span>
+        </div>
+      </button>
+    </div>
+  </ng-template>
+</p-overlayPanel>

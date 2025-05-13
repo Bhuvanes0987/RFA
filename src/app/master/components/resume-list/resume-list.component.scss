@@ -1,0 +1,52 @@
+.resume-container {
+  max-width: 1200px;  // Increased width
+  margin: 3rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafe;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #2c3e50;
+}
+
+p {
+  text-align: center;
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-bottom: 25px;
+  margin-top: 18px;
+}
+
+.p-inputtext {
+  flex: 1;
+  max-width: 300px;
+}
+
+.p-button {
+  white-space: nowrap;
+  padding-left: 30px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #888;
+}
