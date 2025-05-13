@@ -1,0 +1,29 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-left">
+      <img src=".\assets\excelencia-logo-new.svg" style="height: 200px;width: 200px;" alt="Logo" class="logo" />
+      <h2>Resume Filter Automation (RFA)</h2>
+    </div>
+
+    <div class="login-right">
+      <h3>Login to access your account</h3>
+      <p class="instruction">Enter your work email to receive access code.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+       
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          (input)="onEmailInput($event)"
+          placeholder="yourname@excelenciaconsulting.com"
+        />
+      
+        
+        <button type="submit" [disabled]="!loginForm.valid" pButton label="Continue" class="w-full mt-3"></button>
+      </form>
+      
+    </div>
+  </div>
+</div>

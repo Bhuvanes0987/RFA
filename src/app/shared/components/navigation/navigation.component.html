@@ -1,0 +1,54 @@
+<div class="app-logo mb-4">
+    <img
+      src="../../../../assets/excelencia-logo-new.svg"
+      alt=""
+      width="176"
+      height="51"
+      class="logo-default" />
+    <img
+      src="../../assets/excelencia-e-symbol.svg"
+      alt=""
+      width="28"
+      height="28"
+      class="logo-short" />
+  </div>
+  <div class="app-nav ">
+    <div class="nav-item" *ngFor="let nav of menu; index as i">
+      <a
+        
+        class="nav-link"
+        [routerLink]="nav.path ? [nav.path] : null"
+        [routerLinkActive]="['active']"
+        pStyleClass="@parent"
+        toggleClass="nav-child-expand"
+        [class.admin]="nav.name === 'Admin'">
+        <span *ngIf="nav.icon" class="nav-icon material-symbols-rounded my-custom-class">
+          {{ nav.icon }}
+        </span>
+        <span class="nav-text">
+          {{ nav.name }}
+        </span>
+        <div
+        *ngIf="nav.children"
+        class="nav-toggle-icon material-symbols-rounded cursor-pointer p-2 ml-auto">
+        expand_more
+      </div>
+      </a>
+      <div class="nav-child-box"  *ngIf="nav.children">
+        <div
+          class="nav-child-item"
+          *ngFor="let child of nav.children; index as j">
+          <a
+            [routerLink]="child.path ? [child.path] : null"
+            class="nav-link"
+            [routerLinkActive]="['active']">
+            <span *ngIf="child.icon" class="nav-icon material-symbols-rounded">
+              {{ child.icon }}
+            </span>
+            <span class="nav-text">{{ child.name }}</span>
+          </a>          
+        </div>
+      </div>
+    </div>
+  </div>
+  

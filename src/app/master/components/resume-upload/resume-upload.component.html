@@ -1,0 +1,117 @@
+<div class="resume-upload-container">
+  <p-table
+    #dt
+    [value]="resumes"
+    [(selection)]="selectedResumes"
+    (onRowUnselect)="onRowUnselected($event)"
+    dataKey="ID"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 20, 50, 100]"
+    sortField="Score" 
+    [sortOrder]="-1"
+    [globalFilterFields]="['ID', 'FName', 'LName', 'Email', 'Phone', 'Position', 'Date', 'Experience', 'Score']"
+    [filterDelay]="300"
+    responsiveLayout="scroll"
+    class="p-shadow-2 rounded-table"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        <h2 class="resume-header">  
+          Resume Upload
+        </h2>
+        <span class="p-input-icon-right">
+          <i class="pi pi-search"></i>
+          <input
+            #jdSearch
+            pInputText
+            placeholder="Job Description Keywords..."
+            [(ngModel)]="jdFilter"
+            class="search-box"
+            [disabled]="!resumes"
+          />
+        </span>
+
+        <p-fileUpload
+          class="upload-box"
+          name="file"
+          mode="basic"
+          [customUpload]="true"
+          (uploadHandler)="onUpload($event)"
+          chooseLabel="Upload ZIP"
+          accept=".zip"
+          class="p-button-rounded p-button-outlined"
+        ></p-fileUpload>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3em">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th> S.No </th>
+        <!--<th pSortableColumn="ID">ID <p-sortIcon field="ID"></p-sortIcon></th>-->
+        <th pSortableColumn="FName">First Name <p-sortIcon field="FName"></p-sortIcon></th>
+        <th pSortableColumn="LName">Last Name <p-sortIcon field="LName"></p-sortIcon></th>
+        <th pSortableColumn="Email">Email <p-sortIcon field="Email"></p-sortIcon></th>
+        <th pSortableColumn="Phone">Mobile <p-sortIcon field="Phone"></p-sortIcon></th>
+        <th pSortableColumn="Position">Position <p-sortIcon field="Position"></p-sortIcon></th>
+        <th pSortableColumn="Experience">Experience <p-sortIcon field="Experience"></p-sortIcon></th>
+        <th pSortableColumn="Score">Score <p-sortIcon field="Score"></p-sortIcon></th>
+        <th pSortableColumn="Date">Date <p-sortIcon field="Date"></p-sortIcon></th>
+        <th>Skills </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-resume let-i="rowIndex">
+      <tr [pSelectableRow]="resume">
+        <td>
+          <p-tableCheckbox [value]="resume"></p-tableCheckbox>
+        </td>
+        <td>{{ i + 1 }}</td>
+        <td>{{ resume.FName }}</td>
+        <td>{{ resume.LName }}</td>
+        <td><a href="mailto:{{ resume.Email }}">{{ resume.Email }}</a></td>
+        <td>{{ resume.Phone }}</td>
+        <td>{{ resume.Position }}</td>
+        <td>{{ resume.Experience }}</td>
+        <td>{{ resume.Score }}</td>
+        <td>{{ resume.Date | date: 'dd/MM/yyyy'  }}</td>
+        <td>
+          <i 
+            class="pi pi-copy" 
+            pTooltip="{{ resume.Skills.join(', ') }}" 
+            tooltipPosition="top"
+            style="cursor: pointer; font-size: 1.2rem;"
+            (click)="copySkills(resume.Skills)"
+          ></i>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <button 
+        pButton 
+        type="button" 
+        label="Save" 
+        icon="pi pi-save" 
+        (click)="saveSelected()" 
+        class="p-button-sm p-button-success paginator-btn"
+      ></button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+      <!-- To keep the paginator centered, make sure to not add anything here. -->
+       <span class="record-count">
+          Showing {{ (dt?.totalRecords ?? 0)>0 ? ((dt?.first ?? 0) + 1) : 0 }} to 
+          {{
+            (dt?.first ?? 0) + (dt?.rows ?? 0) > (dt?.totalRecords ?? 0)
+              ? (dt?.totalRecords ?? 0)
+              : (dt?.first ?? 0) + (dt?.rows ?? 0)
+          }} 
+          of {{ dt?.totalRecords ?? 0 }} records
+        </span>
+    </ng-template>
+    
+  </p-table>
+  <p-toast></p-toast>
+</div>

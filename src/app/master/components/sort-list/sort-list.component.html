@@ -1,0 +1,91 @@
+
+<div class="filter-input">
+  <h2 class="page-heading">
+      Short Listed Profiles
+    </h2>
+  <input type="text" [(ngModel)]="filterKeyword" placeholder="E.g., Angular, Node.js..." class="p-inputtext p-component" />
+  <button pButton type="button" label="Filter Resumes" icon="pi pi-filter" (click)="onFilter()"></button>
+</div>
+
+<p-table 
+  #dt
+  [value]="filteredResumes" 
+  class="p-datatable-sm" 
+  [paginator]="true" 
+  [rows]="10"
+  [rowsPerPageOptions]="[10, 20, 50, 100]"
+  sortField="Score" 
+  [sortOrder]="-1"
+  >
+  <ng-template pTemplate="header">
+    <tr>
+      <th> S.No </th>
+      <!--<th pSortableColumn="ID">ID <p-sortIcon field="ID"></p-sortIcon></th>-->
+      <th pSortableColumn="FName">First Name <p-sortIcon field="FName"></p-sortIcon></th>
+      <th pSortableColumn="LName">Last Name <p-sortIcon field="LName"></p-sortIcon></th>
+      <th pSortableColumn="Email">Email <p-sortIcon field="Email"></p-sortIcon></th>
+      <th pSortableColumn="Phone">Mobile <p-sortIcon field="Phone"></p-sortIcon></th>
+      <th pSortableColumn="Position">Position <p-sortIcon field="Position"></p-sortIcon></th>
+      <th pSortableColumn="Experience">Experience (Years) <p-sortIcon field="Experience"></p-sortIcon></th>
+      <th pSortableColumn="Score">Score <p-sortIcon field="Score"></p-sortIcon></th>
+      <th pSortableColumn="Date">Date <p-sortIcon field="Date"></p-sortIcon></th>
+      <th>Skills </th>
+      <th>Actions </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-resume  let-i="rowIndex">
+    <tr>
+      <td>{{ i+1 }}</td>
+      <td>{{ resume.FName }}</td>
+      <td>{{ resume.LName }}</td>
+      <td><a href="mailto:{{ resume.Email }}">{{ resume.Email }}</a></td>
+      <td>{{ resume.Phone }}</td>
+      <td>{{ resume.Position }}</td>
+      <td>{{ resume.Experience }}</td>
+      <td>{{ resume.Score }}</td>
+      <td>{{ resume.Date | date: 'dd/MM/yyyy'  }}</td>
+      <td>
+        <i 
+          class="pi pi-copy" 
+          pTooltip="{{ resume.Skills.join(', ') }}" 
+          tooltipPosition="top"
+          style="cursor: pointer; font-size: 1.2rem;"
+          (click)="copySkills(resume.Skills)"
+        ></i>
+      </td>
+      <td>
+        <button pButton type="button" pTooltip="View" 
+          tooltipPosition="top" icon="pi pi-eye" class="p-button-rounded p-button-text"
+          (click)="viewResume(resume.FilePath)"></button>
+        <button pButton type="button" pTooltip="Download" 
+          tooltipPosition="top" icon="pi pi-download" class="p-button-rounded p-button-text"
+          (click)="downloadResume(resume.FilePath)"></button>
+        <button pButton type="button" pTooltip="Send Mail" 
+          tooltipPosition="top" icon="pi pi-send" class="p-button-rounded p-button-text"
+        (click)="sendMail(resume.Email)"></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="paginatorleft">
+  </ng-template>
+  <ng-template pTemplate="paginatorright">
+      <!-- To keep the paginator centered, make sure to not add anything here. -->
+    <span class="record-count">
+      Showing {{ (dt?.totalRecords ?? 0)>0 ? ((dt?.first ?? 0) + 1) : 0 }} to 
+      {{
+        (dt?.first ?? 0) + (dt?.rows ?? 0) > (dt?.totalRecords ?? 0)
+          ? (dt?.totalRecords ?? 0)
+          : (dt?.first ?? 0) + (dt?.rows ?? 0)
+      }} 
+      of {{ dt?.totalRecords ?? 0 }} records
+    </span>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="12" class="text-center text-muted">No resumes available to display</td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-toast></p-toast>
+<!-- </div> -->
+  

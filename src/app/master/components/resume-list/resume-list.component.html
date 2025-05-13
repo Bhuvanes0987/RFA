@@ -1,0 +1,42 @@
+<div class="resume-container">
+  <h2>👤 Resume Matcher</h2>
+  <p>Filter resumes by entering job description keywords.</p>
+
+    <div class="filter-input">
+      <input type="text" [(ngModel)]="filterKeyword" placeholder="E.g., Angular, Node.js..." class="p-inputtext p-component" />
+      <button pButton type="button" label="Filter Resumes" icon="pi pi-filter" (click)="onFilter()"></button>
+    </div>
+
+    <p-table [value]="filteredResumes" class="p-datatable-sm" [paginator]="false" [rows]="5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile Number</th>
+          <th>Position</th>
+          <th>Years of Experience</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-resume>
+        <tr>
+          <td>{{ resume.Name }}</td>
+          <td>{{ resume.Email }}</td>
+          <td>{{ resume.Phone }}</td>
+          <td>{{ resume.Skills }}</td>
+          <td>{{ resume.Experience }}</td>
+          <td>
+            <button pButton type="button" icon="pi pi-eye" class="p-button-rounded p-button-text"
+              (click)="viewResume(resume.resumeUrl, resume.name + '.pdf')"></button>
+            <button pButton type="button" icon="pi pi-download" class="p-button-rounded p-button-text"
+              (click)="downloadResume(resume.resumeUrl, resume.name + '.pdf')"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center text-muted">No resumes available to display</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
