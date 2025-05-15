@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, session, url_for, send_file, send_from_directory
+from flask import Flask, request, redirect, session, url_for, render_template_string, send_from_directory
 from flask_cors import CORS
 import os
 import zipfile
@@ -11,7 +11,7 @@ import re
 from dotenv import load_dotenv
 from functools import wraps
 from authlib.integrations.flask_client import OAuth
-import psycopg2
+import mysql.connector
 from jose import jwt
 import requests
 import subprocess
@@ -62,18 +62,23 @@ else:
 
 # Establish a connection to the PostgreSQL database
 def get_db_connection():
-    db_url = os.getenv("DATABASE_URL")
-    conn = psycopg2.connect(db_url)
-    conn.autocommit = True
+    conn = mysql.connector.connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PWD"),
+        database=os.getenv("DB_NAME"),
+        autocommit=True
+    )
     return conn
 
 def init_database():
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        with open("setup.sql",'r') as commands:
+        with open("setup.sql", 'r') as commands:
             cmd_list = commands.read()
-        cursor.execute(cmd_list)
-
+        for statement in cmd_list.split(";"):
+            if statement.strip():
+                cursor.execute(statement)
     print("Database initialized")
 
 def compute_resume_hash(text):
@@ -222,7 +227,7 @@ def auth_callback():
 
         with get_db_connection() as conn:
             cursor = conn.cursor()
-            query = "INSERT INTO Users (email) VALUES (%s) ON CONFLICT (email) DO NOTHING;"
+            query = "INSERT INTO Users (email) VALUES (%s) ON DUPLICATE KEY UPDATE email=email;"
             cursor.execute(query, (user_email,))
 
         # Construct query string with session data
@@ -278,7 +283,7 @@ def filter_docs():
     with get_db_connection() as conn:
         cursor = conn.cursor()
 
-        cursor.execute("Insert into JDList (description) values (%s) ON CONFLICT(description) DO NOTHING",(filter.lower(),))
+        cursor.execute("Insert into JDList (description) values (%s) ON DUPLICATE KEY UPDATE description=description;",(filter.lower(),))
         conn.commit()
         cursor.execute("SELECT jd_id FROM JDList WHERE description = %s", (filter,))
         jd_id = cursor.fetchone()[0]
@@ -525,6 +530,7 @@ def send_mail():
 @app.route("/select-slot")
 def select_time_slot():
 
+    resume_id = request.args.get("resume_id")
     email = request.args.get("email")
     time_slot = request.args.get("slot")
     slot_date,slot_time = time_slot.split("T")
@@ -533,9 +539,45 @@ def select_time_slot():
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("Insert into InterviewSlots values (%s,%s,%s) on conflict (email) do nothing",(email,slot_date,slot_time))
+            cursor.execute("Insert into InterviewSlots (resume_id,email,slot_date,slot_time) values (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE resume_id=resume_id",(resume_id,email,slot_date,slot_time))
         #return redirect(os.getenv("FRONTEND_URL") + '/confirmation')
-        return {"message": "Slot selected successfully!"}, 200
+        confirmation_html = """
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Confirmation</title>
+                <style>
+                    body {
+                        background-color: #f0f9f4;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        font-family: Arial, sans-serif;
+                    }
+                    .container {
+                        text-align: center;
+                    }
+                    .tick {
+                        font-size: 120px;
+                        color: green;
+                    }
+                    .message {
+                        font-size: 24px;
+                        margin-top: 20px;
+                        color: #333;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="tick">✔️</div>
+                    <div class="message">Your slot has been confirmed!</div>
+                </div>
+            </body>
+            </html>
+            """
+        return render_template_string(confirmation_html)
     except:
         return {"error": "Failed to select slot"}, 500
     

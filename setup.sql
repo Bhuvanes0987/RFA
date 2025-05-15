@@ -1,26 +1,45 @@
+CREATE TABLE IF NOT EXISTS Users (
+    email VARCHAR(50) PRIMARY KEY
+);
 
-CREATE TABLE IF NOT EXISTS Users (email varchar(50) primary key);
-CREATE TABLE IF NOT EXISTS Resumes(
-    resume_id serial primary key, 
+CREATE TABLE IF NOT EXISTS Resumes (
+    resume_id INT AUTO_INCREMENT PRIMARY KEY,
     content_hash TEXT,
-    filepath varchar(150), 
+    filepath VARCHAR(150),
     fname TEXT,
     lname TEXT,
-    email varchar(50), 
-    phone varchar(50), 
+    email VARCHAR(50),
+    phone VARCHAR(50),
     position TEXT,
-    skills JSONB, 
-    experience float,
-    mdate date,
-    UNIQUE(content_hash,filepath)
+    skills JSON,  -- MySQL 5.7+ supports JSON
+    experience FLOAT,
+    mdate DATE,
+    UNIQUE KEY unique_hash_path (content_hash(255), filepath(150))
 );
-CREATE TABLE IF NOT EXISTS JDList (jd_id serial primary key, description TEXT UNIQUE);
+
+CREATE TABLE IF NOT EXISTS JDList (
+    jd_id INT AUTO_INCREMENT PRIMARY KEY,
+    description TEXT,
+    UNIQUE KEY unique_description (description(150))
+);
+
 CREATE TABLE IF NOT EXISTS Matches (
-    match_id SERIAL PRIMARY KEY,
-    resume_id INT REFERENCES Resumes(resume_id) ON DELETE CASCADE,
-    jd_id INT REFERENCES JDList(jd_id) ON DELETE CASCADE,
+    match_id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT,
+    jd_id INT,
     score INT,
     reason TEXT,
-    UNIQUE (resume_id, jd_id)  -- prevent duplicate match records
+    UNIQUE KEY unique_resume_jd (resume_id, jd_id),
+    FOREIGN KEY (resume_id) REFERENCES Resumes(resume_id) ON DELETE CASCADE,
+    FOREIGN KEY (jd_id) REFERENCES JDList(jd_id) ON DELETE CASCADE
 );
-CREATE TABLE IF NOT EXISTS InterviewSlots (email varchar(50) primary key, slot_date date, slot_time time)
+
+CREATE TABLE IF NOT EXISTS InterviewSlots (
+    slot_id INT AUTO_INCREMENT PRIMARY KEY,
+    resume_id INT,
+    email VARCHAR(50),
+    slot_date DATE,
+    slot_time TIME,
+    UNIQUE (resume_id),
+    FOREIGN KEY (resume_id) REFERENCES Resumes(resume_id) ON DELETE CASCADE
+);
