@@ -105,7 +105,7 @@ export class SortListComponent {
               severity: 'success',
               summary: 'Sent!',
               detail: `Mail sent to ${payload.to_email}`,
-              life: 1000
+              life: 2000
             });
           },
           error: (error) => {
@@ -115,7 +115,7 @@ export class SortListComponent {
               severity: 'error',
               summary: 'Failed!',
               detail: "Could not send mail",
-              life: 1000
+              life: 2000
             });
           }
         });
@@ -128,14 +128,14 @@ export class SortListComponent {
           severity: 'success',
           summary: 'Copied!',
           detail: 'Skills copied to clipboard',
-          life: 1000
+          life: 1500
         });
       }).catch(err => {
         this.messageService.add({
           severity: 'error',
           summary: 'Failed',
           detail: 'Unable to copy skills',
-          life: 1000
+          life: 1500
         });
       });
     }

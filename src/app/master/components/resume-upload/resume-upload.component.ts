@@ -103,14 +103,14 @@ export class ResumeUploadComponent {
         severity: 'success',
         summary: 'Copied!',
         detail: 'Skills copied to clipboard',
-        life: 1000
+        life: 1500
       });
     }).catch(err => {
       this.messageService.add({
         severity: 'error',
         summary: 'Failed',
         detail: 'Unable to copy skills',
-        life: 1000
+        life: 1500
       });
     });
   }

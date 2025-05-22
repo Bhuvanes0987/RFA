@@ -494,19 +494,59 @@ def send_mail():
     for slot in slots:
         buttons_html += f"""
             <a href="http://localhost:5000/select-slot?email={to_email}&slot={slot}"
-               style="display: inline-block; margin: 10px 0; padding: 10px 15px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">
+               class='slot-button'>
                {slot}
             </a><br>
         """
 
-    html_content = f"""
-        <html>
-            <body>
-                <p>Please select a time slot for your interview:</p>
+    html_content = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Interview Slot Selection</title>
+            """+"""<style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f9f9f9;
+                    padding: 40px;
+                    text-align: center;
+                }
+                p {
+                    font-size: 20px;
+                    color: #333;
+                    margin-bottom: 30px;
+                }
+                .button-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 20px;
+                }
+                .slot-button {
+                    background-color: #007BFF;
+                    border: none;
+                    color: white;
+                    padding: 12px 25px;
+                    font-size: 16px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    text-decoration: none;
+                }
+                .slot-button:hover {
+                    background-color: #0056b3;
+                }
+            </style>"""+ f"""
+        </head>
+        <body>
+            <p>Please select a time slot for your interview:</p>
+            <div class="button-container">
                 {buttons_html}
-            </body>
+            </div>
+        </body>
         </html>
-    """
+            """
 
     msg = EmailMessage()
     msg['Subject'] = subject
@@ -539,6 +579,47 @@ def select_time_slot():
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
+            cursor.execute("Select * from InterviewSlots where email = %s",(email,))
+            confirmed = bool(len(cursor.fetchall()))
+            print("CONFIRMED:",confirmed)
+            if confirmed:
+                confirmation_html = """
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Confirmation</title>
+                        <style>
+                            body {
+                                background-color: #f0f9f4;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                                font-family: Arial, sans-serif;
+                            }
+                            .container {
+                                text-align: center;
+                            }
+                            .tick {
+                                font-size: 120px;
+                                color: green;
+                            }
+                            .message {
+                                font-size: 24px;
+                                margin-top: 20px;
+                                color: #333;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <div class="tick">X</div>
+                            <div class="message">You have already confirmed previously!</div>
+                        </div>
+                    </body>
+                    </html>
+                    """
+                return render_template_string(confirmation_html)
             cursor.execute("Insert into InterviewSlots (resume_id,email,slot_date,slot_time) values (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE resume_id=resume_id",(resume_id,email,slot_date,slot_time))
         #return redirect(os.getenv("FRONTEND_URL") + '/confirmation')
         confirmation_html = """
@@ -578,8 +659,8 @@ def select_time_slot():
             </html>
             """
         return render_template_string(confirmation_html)
-    except:
-        return {"error": "Failed to select slot"}, 500
+    except Exception as e:
+        return {"Error": e}, 500
     
 @app.route("/jd-list")
 def get_jd_list():
