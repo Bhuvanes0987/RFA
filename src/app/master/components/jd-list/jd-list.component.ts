@@ -62,14 +62,14 @@ export class JdListComponent implements OnInit {
         severity: 'success',
         summary: 'Copied!',
         detail: 'JD copied to clipboard',
-        life: 1000
+        life: 1500
       });
     }).catch(err => {
       this.messageService.add({
         severity: 'error',
         summary: 'Failed',
         detail: 'Unable to copy JD',
-        life: 1000
+        life: 1500
       });
     });
   }

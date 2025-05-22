@@ -26,7 +26,8 @@ export class NavigationComponent implements OnInit {
     { name: 'Resume Upload', path: 'resumeupload', icon: 'cloud_upload' },
     // { name: 'Resume List', path: 'resumelist', icon: 'folder' },
     { name: 'Short List', path: 'short-list', icon: 'description' },
-    { name: 'JD List', path: 'jd-list', icon: 'description' },      
+    { name: 'JD List', path: 'jd-list', icon: 'description' }, 
+    { name: 'Calendar', path: 'interview-calendar', icon: 'calendar_today' },   
     // {
     //   name: 'Settings',
     //   children: [

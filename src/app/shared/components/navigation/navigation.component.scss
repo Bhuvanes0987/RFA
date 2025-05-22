@@ -56,10 +56,18 @@
       background: #504e82;
       box-shadow: 0px 0 white inset;
       // transform: translateX(3px);
+      color: white;
+      .nav-text {
+        color: white;
+      }
     }
 
     &.active {
-      background: linear-gradient(#19357E 97.5%, transparent 1%)
+      background: linear-gradient(#19357E 97.5%, transparent 1%);
+      .nav-text {
+        color: white;
+      }
+      
       // box-shadow:  0px 0px 1px white inset;
     }
 
@@ -72,6 +80,7 @@
       flex: 1 0 auto;
       color: black;
       // transition: transform 0.3s;
+
     }
   }
 

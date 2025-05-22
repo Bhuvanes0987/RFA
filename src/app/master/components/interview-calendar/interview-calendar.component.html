@@ -1,0 +1,83 @@
+<div class="calendar-wrapper">
+  <!-- Title -->
+  <div class="header-section">
+    <h2 class="calendar-title">Interview Calendar</h2>
+  </div>
+
+  <!-- Filters -->
+  <div class="top-bar">
+    <div class="filters">
+      <p-dropdown
+        [options]="yearOptions"
+        [(ngModel)]="selectedYear"
+        (onChange)="onYearChange($event)"
+        placeholder="Year"
+        class="dropdown"
+      ></p-dropdown>
+
+      <p-dropdown
+        [options]="monthOptions"
+        [(ngModel)]="selectedMonth"
+        (onChange)="onMonthChange($event)"
+        placeholder="Month"
+        class="dropdown"
+      ></p-dropdown>
+    </div>
+  </div>
+
+  <!-- Calendar View -->
+  <div *ngIf="showCalendar">
+    <full-calendar
+      #calendar
+      [options]="calendarOptions"
+    ></full-calendar>
+  </div>
+
+  <!-- Filtered Events List -->
+  <div class="filtered-events" *ngIf="filteredEvents.length && showCalendar">
+    <h3>
+      Interviews in {{ monthOptions[selectedMonth].label }}
+      {{ selectedYear }}
+    </h3>
+    <table>
+      <thead>
+        <tr><th>Title</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ev of filteredEvents">
+          <td>{{ ev.title }}</td>
+          <td>{{ ev.date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="!filteredEvents.length && showCalendar">
+    <p>No interviews scheduled for
+      {{ monthOptions[selectedMonth].label }} {{ selectedYear }}.</p>
+  </div>
+
+  <!-- Candidate Table View -->
+  <div *ngIf="showTableView" class="candidate-table">
+    <button class="back-button" (click)="backToCalendar()">
+      ← Back to Calendar
+    </button>
+    <h3>Candidates for Selected Interview</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th><th>Email</th><th>Mobile</th>
+          <th>Date & Time</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of selectedCandidates">
+          <td>{{ c.name }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.mobile }}</td>
+          <td>{{ c.datetime }}</td>
+          <td>{{ c.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
