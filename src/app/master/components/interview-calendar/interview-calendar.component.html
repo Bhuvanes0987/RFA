@@ -1,10 +1,9 @@
 <div class="calendar-wrapper">
-  <!-- Title -->
+  <!-- Title section added here -->
   <div class="header-section">
     <h2 class="calendar-title">Interview Calendar</h2>
   </div>
 
-  <!-- Filters -->
   <div class="top-bar">
     <div class="filters">
       <p-dropdown
@@ -23,61 +22,62 @@
         class="dropdown"
       ></p-dropdown>
     </div>
+
+    <div class="view-toggle">
+      <button (click)="toggleView('calendar')">Table View</button>
+      <button (click)="toggleView('table')">Grid View</button>
+    </div>
   </div>
 
-  <!-- Calendar View -->
-  <div *ngIf="showCalendar">
-    <full-calendar
-      #calendar
-      [options]="calendarOptions"
-    ></full-calendar>
+  <!-- Show calendar or candidate details based on flag -->
+  <div *ngIf="showCalendar && !showTableView">
+    <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+
   </div>
 
-  <!-- Filtered Events List -->
-  <div class="filtered-events" *ngIf="filteredEvents.length && showCalendar">
-    <h3>
-      Interviews in {{ monthOptions[selectedMonth].label }}
-      {{ selectedYear }}
-    </h3>
-    <table>
-      <thead>
-        <tr><th>Title</th><th>Date</th></tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ev of filteredEvents">
-          <td>{{ ev.title }}</td>
-          <td>{{ ev.date }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div *ngIf="!filteredEvents.length && showCalendar">
-    <p>No interviews scheduled for
-      {{ monthOptions[selectedMonth].label }} {{ selectedYear }}.</p>
+  <div *ngIf="showTableView">
+    <div class="candidate-table" *ngIf="selectedCandidates.length > 0; else noCandidates">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Date & Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let candidate of selectedCandidates">
+            <td>{{ candidate.name }}</td>
+            <td>{{ candidate.email }}</td>
+            <td>{{ candidate.mobile }}</td>
+            <td>{{ candidate.datetime }}</td>
+            <td>{{ candidate.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #noCandidates>
+      <p>No candidates available.</p>
+    </ng-template>
   </div>
 
-  <!-- Candidate Table View -->
-  <div *ngIf="showTableView" class="candidate-table">
-    <button class="back-button" (click)="backToCalendar()">
-      ← Back to Calendar
-    </button>
-    <h3>Candidates for Selected Interview</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th><th>Email</th><th>Mobile</th>
-          <th>Date & Time</th><th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let c of selectedCandidates">
-          <td>{{ c.name }}</td>
-          <td>{{ c.email }}</td>
-          <td>{{ c.mobile }}</td>
-          <td>{{ c.datetime }}</td>
-          <td>{{ c.status }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="!showCalendar && !showTableView">
+    <h3>Candidate Details</h3>
+    <div *ngIf="selectedCandidates.length > 0; else noCandidateDetails">
+      <div *ngFor="let candidate of selectedCandidates" class="candidate-card">
+        <p><strong>Name:</strong> {{ candidate.name }}</p>
+        <p><strong>Email:</strong> {{ candidate.email }}</p>
+        <p><strong>Mobile:</strong> {{ candidate.mobile }}</p>
+        <p><strong>Date & Time:</strong> {{ candidate.datetime }}</p>
+        <p><strong>Status:</strong> {{ candidate.status }}</p>
+      </div>
+      <button (click)="backToCalendar()">Back to Calendar</button>
+    </div>
+    <ng-template #noCandidateDetails>
+      <p>No candidate details found.</p>
+      <button (click)="backToCalendar()">Back to Calendar</button>
+    </ng-template>
   </div>
 </div>

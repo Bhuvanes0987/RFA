@@ -447,7 +447,8 @@ def send_mail():
         
     '''if request.method == "POST":
         data = request.form
-        to_email = data.get("to_email","rushilak03@gmail.com")
+        # to_email = data.get("to_email","karthikeyan.sundar@excelenciaconsulting.com")
+        to_email = data.get("to_email","bhuvaneswaran.vijayan@excelenciaconsulting.com")
         subject = data.get("subject", "Hello from Flask")
         body = data.get("body", "This is a test email sent from Microsoft Graph API.")
         # Store the email data in the session to persist it
@@ -468,7 +469,8 @@ def send_mail():
     
     
     data = session.get('email_data',{})
-    to_email = data.get("to_email","rushilak03@gmail.com")
+    # to_email = data.get("to_email","karthikeyan.sundar@excelenciaconsulting.com")
+     to_email = data.get("to_email","bhuvaneswaran.vijayan@excelenciaconsulting.com")
     subject = data.get("subject", "Hello from Flask")
     body = data.get("body", "This is a test email sent from Microsoft Graph API.")
     session.pop('email_data')
@@ -479,7 +481,8 @@ def send_mail():
 
     sender_mail = "rushilak03@gmail.com"
     sender_pwd = APP_PWD
-    to_email = msg_data.get("to_email", "rushilgoku@gmail.com")
+    # to_email = msg_data.get("to_email", "karthikeyan.sundar@excelenciaconsulting.com")
+    to_email = msg_data.get("to_email", "bhuvaneswaran.vijayan@excelenciaconsulting.com")
     subject = msg_data.get("subject", "Interview Time Selection")
 
     # List of available slots (could be fetched from DB instead)
@@ -500,21 +503,40 @@ def send_mail():
         """
 
     html_content = """
-        <!DOCTYPE html>
+                <!DOCTYPE html>
         <html lang="en">
         <head>
-            <meta charset="UTF-8">
-            <title>Interview Slot Selection</title>
-            """+"""<style>
+            <meta charset="UTF-8" />
+            <title>Interview Slot Confirmation</title>
+            <style>
                 body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f9f9f9;
-                    padding: 40px;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background-color: #f4f6f8;
+                    margin: 0;
+                    padding: 40px 20px;
+                    color: #333333;
                     text-align: center;
                 }
-                p {
-                    font-size: 20px;
-                    color: #333;
+                .email-container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background: white;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    padding: 40px 30px;
+                }
+                .logo {
+                    max-width: 150px;
+                    margin-bottom: 30px;
+                }
+                h1 {
+                    font-weight: 600;
+                    color: #222222;
+                    margin-bottom: 10px;
+                }
+                p.intro {
+                    font-size: 18px;
+                    line-height: 1.5;
                     margin-bottom: 30px;
                 }
                 .button-container {
@@ -522,27 +544,53 @@ def send_mail():
                     flex-wrap: wrap;
                     justify-content: center;
                     gap: 20px;
+                    margin-bottom: 30px;
                 }
                 .slot-button {
                     background-color: #007BFF;
                     border: none;
-                    color: white;
-                    padding: 12px 25px;
+                    color: white !important;
+                    padding: 14px 28px;
                     font-size: 16px;
                     border-radius: 6px;
                     cursor: pointer;
-                    transition: background-color 0.3s ease;
                     text-decoration: none;
+                    display: inline-block;
+                    transition: background-color 0.3s ease;
+                    font-weight: 600;
+                    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
                 }
-                .slot-button:hover {
+                .slot-button:hover, .slot-button:focus {
                     background-color: #0056b3;
+                    box-shadow: 0 6px 12px rgba(0,86,179,0.5);
+                    outline: none;
                 }
-            </style>"""+ f"""
+                .footer-text {
+                    font-size: 14px;
+                    color: #777777;
+                    line-height: 1.4;
+                }
+            </style """+ f""">
         </head>
         <body>
-            <p>Please select a time slot for your interview:</p>
-            <div class="button-container">
-                {buttons_html}
+            <div class="email-container">
+           <img class="logo" src="<img class="logo" alt="Company Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg==" />
+" alt="Company Logo" />
+
+                <h1>Interview Slot Confirmation</h1>
+                <p class="intro">
+                    Thank you for your interest in joining <strong>Your Company Name</strong>.<br />
+                    Please select a convenient time slot for your upcoming interview by clicking one of the options below.
+                </p>
+                
+               <div class="button-container">
+                 {buttons_html}
+               </div>
+                
+                <p class="footer-text">
+                    If you have any questions, feel free to reply to this email.<br />
+                    We look forward to speaking with you!
+                </p>
             </div>
         </body>
         </html>
@@ -552,7 +600,8 @@ def send_mail():
     msg['Subject'] = subject
     msg['From'] = sender_mail
     # For testing only
-    to_email = "rushilgoku@gmail.com"
+    # to_email = "karthikeyan.sundar@excelenciaconsulting.com"
+    to_email = "bhuvaneswaran.vijayan@excelenciaconsulting.com"
     msg['To'] = to_email
     msg.set_content("Please use an HTML-compatible email viewer.")
     msg.add_alternative(html_content, subtype='html')

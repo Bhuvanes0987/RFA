@@ -38,7 +38,7 @@
           mode="basic"
           [customUpload]="true"
           (uploadHandler)="onUpload($event)"
-          chooseLabel="Upload ZIP"
+          chooseLabel="Upload"
           accept=".zip"
           class="p-button-rounded p-button-outlined"
         ></p-fileUpload>
@@ -79,13 +79,13 @@
         <td>{{ resume.Score }}</td>
         <td>{{ resume.Date | date: 'dd/MM/yyyy'  }}</td>
         <td>
-          <i 
+          <!-- <i 
             class="pi pi-copy" 
             pTooltip="{{ resume.Skills.join(', ') }}" 
             tooltipPosition="top"
             style="cursor: pointer; font-size: 1.2rem;"
             (click)="copySkills(resume.Skills)"
-          ></i>
+          ></i> -->
         </td>
       </tr>
     </ng-template>

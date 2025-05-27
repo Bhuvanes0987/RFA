@@ -45,13 +45,13 @@
       <td>{{ resume.Score }}</td>
       <td>{{ resume.Date | date: 'dd/MM/yyyy'  }}</td>
       <td>
-        <i 
+        <!-- <i 
           class="pi pi-copy" 
           pTooltip="{{ resume.Skills.join(', ') }}" 
           tooltipPosition="top"
           style="cursor: pointer; font-size: 1.2rem;"
           (click)="copySkills(resume.Skills)"
-        ></i>
+        ></i> -->
       </td>
       <td>
         <button pButton type="button" pTooltip="View" 

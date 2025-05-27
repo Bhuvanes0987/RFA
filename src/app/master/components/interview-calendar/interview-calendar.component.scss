@@ -1,107 +1,168 @@
+/* Container for the full calendar view */
 .calendar-wrapper {
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  color: #333;
+  padding: 30px;
+  max-width: 95%;
+  margin: 0 auto;
+  background-color: #f5f7fb;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Header section */
 .header-section {
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
+  padding-left: 5px;
 }
 
 .calendar-title {
   font-size: 1.8rem;
   font-weight: 600;
+  color: #3f3f3f;
   margin: 0;
 }
 
+/* Top bar with filters and toggle buttons */
 .top-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .filters {
   display: flex;
-  gap: 1rem;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .dropdown {
-  width: 6rem;
+  width: 150px;
 }
 
-.filtered-events {
-  margin-top: 1.5rem;
-
-  h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1rem;
-
-    th, td {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-
-    th {
-      background: #f0f0f0;
-    }
-  }
+/* View toggle buttons */
+.view-toggle button {
+  padding: 6px 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: #19357E ;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-.candidate-table {
-  margin-top: 1.5rem;
-
-  .back-button {
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-    background: #0069d9;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    &:hover {
-      background: #0053a6;
-    }
-  }
-
-  h3 {
-    margin-bottom: 0.75rem;
-    font-size: 1.3rem;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-
-    th, td {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-    }
-
-    th {
-      background: #e9ecef;
-    }
-  }
+.view-toggle button:hover {
+  background-color: #ededef;
+  color: #19357E ;
 }
 
-@media (max-width: 600px) {
-  .top-bar {
-    flex-direction: column;
-  }
+/* Candidate details table */
+.candidate-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
 
-  .dropdown {
-    width: 100%;
-  }
+.candidate-table th,
+.candidate-table td {
+  padding: 10px 16px;
+  border: 1px solid #131413;
+  text-align: left;
+}
 
-  .filtered-events table,
-  .candidate-table table {
-    font-size: 0.9rem;
-  }
+.candidate-table th {
+  background: #a383f3;
+  color: white;
+}
+
+/* Candidate card for details view */
+.candidate-card {
+  border: 1px solid #2058e6;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #e8e0f4;
+  margin-bottom: 16px;
+}
+
+/* Back button styling */
+button {
+  padding: 8px 16px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2c3a91;
+}
+
+/* FullCalendar styling */
+::ng-deep full-calendar {
+  display: block;
+  max-width: 95%;
+  margin: 0 auto;
+}
+
+::ng-deep .fc {
+  font-size: 0.85rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Header & toolbar */
+::ng-deep .fc-toolbar.fc-header-toolbar {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  background-color: #ede7f6;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+::ng-deep .fc .fc-toolbar-title {
+  font-size: 1.4rem;
+  color: #4527a0;
+}
+
+::ng-deep .fc-button {
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  background-color: #9575cd;
+  border: none;
+  color: white;
+  border-radius: 4px;
+}
+
+::ng-deep .fc-button:hover {
+  background-color: #7e57c2;
+}
+
+/* Calendar cell styling */
+::ng-deep .fc-daygrid-day-frame {
+  padding: 3px;
+  min-height: 50px;
+  background-color: #f3f0fa;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .fc-daygrid-day-frame:hover {
+  background-color: #e1dbee;
+}
+
+/* Event styling */
+::ng-deep .fc-event {
+  background-color: #64b5f6 !important;
+  border: none;
+  padding: 2px 4px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  color: white;
+}
+
+::ng-deep .fc-event:hover {
+  background-color: #42a5f5 !important;
+  cursor: pointer;
 }
